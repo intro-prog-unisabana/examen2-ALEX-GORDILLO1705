@@ -1,4 +1,4 @@
-# lap_timer.py
+
 # Libreria de funciones para registrar tiempos de vuelta en una carrera.
 #
 # Estructura del diccionario (timer):
@@ -12,7 +12,16 @@ def init(max_laps):
     Crea y retorna un diccionario para almacenar hasta max_laps vueltas.
     """
     # TODO: Implementar
-    pass
+    def init(max_laps):
+        return {
+            'max': max_laps,
+            'times': [],
+            'total': 0.0
+        }
+    init(50)
+    resultado = init(30)
+    print(resultado)  # {'max': 30, 'times': [], 'total': 0.0}  
+
 
 
 def add_lap(timer, time):
@@ -21,7 +30,15 @@ def add_lap(timer, time):
     Retorna el diccionario modificado.
     """
     # TODO: Implementar
-    pass
+    if len(timer['times']) < timer['max']:
+        timer['times'].append(time)
+        timer['total'] += time
+        return timer 
+    else:     raise ValueError("No se puede agregar mas vueltas, se ha alcanzado el tiempo maximo permitido")
+    return timer
+
+
+
 
 
 def count(timer):
@@ -29,7 +46,11 @@ def count(timer):
     Retorna el numero de vueltas agregadas.
     """
     # TODO: Implementar
-    pass
+
+    def count(timer):
+        return len(timer['times'])  
+
+
 
 
 def cumulative_time(timer):
@@ -37,7 +58,9 @@ def cumulative_time(timer):
     Retorna el tiempo acumulado de todas las vueltas.
     """
     # TODO: Implementar
-    pass
+    def cumulative_time(timer):
+        return timer['total']
+
 
 
 def format_laps(timer):
@@ -46,7 +69,9 @@ def format_laps(timer):
     Formato: [t1, t2, t3, ..., tn]
     """
     # TODO: Implementar
-    pass
+    def format_laps(timer):
+        return str(timer['times'])
+    
 
 
 def fastest_lap(timer):
@@ -54,15 +79,28 @@ def fastest_lap(timer):
     Retorna el tiempo mas rapido de cualquier vuelta.
     """
     # TODO: Implementar
-    pass
-
+    def fastest_lap(timer):
+        if timer['times']:
+            return min(timer['times'])
+        else:
+            return None  # No hay vueltas registradas
+        
+    
 
 def fastest_multi_lap(timer, k):
     """
     Retorna el tiempo acumulado mas rapido de cualquier k vueltas consecutivas.
     """
     # TODO: Implementar
-    pass
+    def fastest_multi_lap(timer, k):
+        if len(timer['times']) < k:
+            return None  # No hay suficientes vueltas para calcular
+        min_time = float('inf')
+        for i in range(len(timer['times']) - k + 1):
+            current_time = sum(timer['times'][i:i+k])
+            if current_time < min_time:
+                min_time = current_time
+        return min_time
 
 
 def longest_decreasing_streak(timer):
@@ -71,8 +109,19 @@ def longest_decreasing_streak(timer):
     donde los tiempos disminuyen estrictamente.
     """
     # TODO: Implementar
-    pass
-
+    def longest_decreasing_streak(timer):
+        max_streak = 0
+        current_streak = 1
+        
+        for i in range(1, len(timer['times'])):
+            if timer['times'][i] < timer['times'][i - 1]:
+                current_streak += 1
+            else:
+                max_streak = max(max_streak, current_streak)
+                current_streak = 1
+        
+        max_streak = max(max_streak, current_streak)  # Verificar al final
+        return max_streak
 
 def main():
     # crear un cronometro para el record mundial de 100m de Usain Bolt,
