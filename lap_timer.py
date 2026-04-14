@@ -7,21 +7,17 @@
 #   - 'total': tiempo acumulado de todas las vueltas (float)
 
 
+# Libreria de funciones para registrar tiempos de vuelta en una carrera.
+
 def init(max_laps):
     """
     Crea y retorna un diccionario para almacenar hasta max_laps vueltas.
     """
-    # TODO: Implementar
-    def init(max_laps):
-        return {
-            'max': max_laps,
-            'times': [],
-            'total': 0.0
-        }
-    init(50)
-    resultado = init(30)
-    print(resultado)  # {'max': 30, 'times': [], 'total': 0.0}  
-
+    return {
+        'max': max_laps,
+        'times': [],
+        'total': 0.0
+    }
 
 
 def add_lap(timer, time):
@@ -29,38 +25,26 @@ def add_lap(timer, time):
     Agrega una nueva vuelta con el tiempo especificado.
     Retorna el diccionario modificado.
     """
-    # TODO: Implementar
     if len(timer['times']) < timer['max']:
         timer['times'].append(time)
         timer['total'] += time
-        return timer 
-    else:     raise ValueError("No se puede agregar mas vueltas, se ha alcanzado el tiempo maximo permitido")
-    return timer
-
-
-
+        return timer
+    else:
+        raise ValueError("No se puede agregar mas vueltas")
 
 
 def count(timer):
     """
     Retorna el numero de vueltas agregadas.
     """
-    # TODO: Implementar
-
-    def count(timer):
-        return len(timer['times'])  
-
-
+    return len(timer['times'])
 
 
 def cumulative_time(timer):
     """
     Retorna el tiempo acumulado de todas las vueltas.
     """
-    # TODO: Implementar
-    def cumulative_time(timer):
-        return timer['total']
-
+    return timer['total']
 
 
 def format_laps(timer):
@@ -68,39 +52,35 @@ def format_laps(timer):
     Retorna una representacion en cadena de los tiempos.
     Formato: [t1, t2, t3, ..., tn]
     """
-    # TODO: Implementar
-    def format_laps(timer):
-        return str(timer['times'])
-    
+    return str(timer['times'])
 
 
 def fastest_lap(timer):
     """
     Retorna el tiempo mas rapido de cualquier vuelta.
     """
-    # TODO: Implementar
-    def fastest_lap(timer):
-        if timer['times']:
-            return min(timer['times'])
-        else:
-            return None  # No hay vueltas registradas
-        
-    
+    if not timer['times']:
+        return None
+    return min(timer['times'])
+
 
 def fastest_multi_lap(timer, k):
     """
     Retorna el tiempo acumulado mas rapido de cualquier k vueltas consecutivas.
     """
-    # TODO: Implementar
-    def fastest_multi_lap(timer, k):
-        if len(timer['times']) < k:
-            return None  # No hay suficientes vueltas para calcular
-        min_time = float('inf')
-        for i in range(len(timer['times']) - k + 1):
-            current_time = sum(timer['times'][i:i+k])
-            if current_time < min_time:
-                min_time = current_time
-        return min_time
+    times = timer['times']
+
+    if len(times) < k or k <= 0:
+        return None
+
+    min_time = float('inf')
+
+    for i in range(len(times) - k + 1):
+        current_sum = sum(times[i:i+k])
+        if current_sum < min_time:
+            min_time = current_sum
+
+    return min_time
 
 
 def longest_decreasing_streak(timer):
@@ -108,20 +88,23 @@ def longest_decreasing_streak(timer):
     Retorna la longitud maxima de una secuencia de vueltas consecutivas
     donde los tiempos disminuyen estrictamente.
     """
-    # TODO: Implementar
-    def longest_decreasing_streak(timer):
-        max_streak = 0
-        current_streak = 1
-        
-        for i in range(1, len(timer['times'])):
-            if timer['times'][i] < timer['times'][i - 1]:
-                current_streak += 1
-            else:
-                max_streak = max(max_streak, current_streak)
-                current_streak = 1
-        
-        max_streak = max(max_streak, current_streak)  # Verificar al final
-        return max_streak
+    times = timer['times']
+
+    if not times:
+        return 0
+
+    max_streak = 1
+    current_streak = 1
+
+    for i in range(1, len(times)):
+        if times[i] < times[i - 1]:
+            current_streak += 1
+            max_streak = max(max_streak, current_streak)
+        else:
+            current_streak = 1
+
+    return max_streak
+
 
 def main():
     # crear un cronometro para el record mundial de 100m de Usain Bolt,
