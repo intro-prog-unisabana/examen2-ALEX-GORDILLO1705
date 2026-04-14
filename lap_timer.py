@@ -149,6 +149,5 @@ def main():
     # [1.85, 1.02, 0.91, 0.87, 0.85, 0.82, 0.82, 0.82, 0.83, 0.9]
     print(format_laps(timer))
 
-
 if __name__ == "__main__":
     main()
