@@ -9,11 +9,12 @@
 
 # Libreria de funciones para registrar tiempos de vuelta en una carrera.
 
+# Libreria de funciones para registrar tiempos de vuelta en una carrera.
+
 def init(max_laps):
     """
     Crea y retorna un diccionario para almacenar hasta max_laps vueltas.
     """
-    # Implementar:
     return {
         'max': max_laps,
         'times': [],
@@ -26,7 +27,6 @@ def add_lap(timer, time):
     Agrega una nueva vuelta con el tiempo especificado.
     Retorna el diccionario modificado.
     """
-    # Implementar:
     if len(timer['times']) < timer['max']:
         timer['times'].append(time)
         timer['total'] += time
@@ -39,7 +39,6 @@ def count(timer):
     """
     Retorna el numero de vueltas agregadas.
     """
-    # Implementar:
     return len(timer['times'])
 
 
@@ -47,7 +46,6 @@ def cumulative_time(timer):
     """
     Retorna el tiempo acumulado de todas las vueltas.
     """
-    #implementar:
     return timer['total']
 
 
@@ -56,7 +54,6 @@ def format_laps(timer):
     Retorna una representacion en cadena de los tiempos.
     Formato: [t1, t2, t3, ..., tn]
     """
-    # Implementar:
     return str(timer['times'])
 
 
@@ -64,7 +61,6 @@ def fastest_lap(timer):
     """
     Retorna el tiempo mas rapido de cualquier vuelta.
     """
-    # Implementar:
     if not timer['times']:
         return None
     return min(timer['times'])
@@ -74,7 +70,6 @@ def fastest_multi_lap(timer, k):
     """
     Retorna el tiempo acumulado mas rapido de cualquier k vueltas consecutivas.
     """
-    # Implementar:
     times = timer['times']
 
     if len(times) < k or k <= 0:
@@ -95,7 +90,6 @@ def longest_decreasing_streak(timer):
     Retorna la longitud maxima de una secuencia de vueltas consecutivas
     donde los tiempos disminuyen estrictamente.
     """
-    # implementar:
     times = timer['times']
 
     if not times:
